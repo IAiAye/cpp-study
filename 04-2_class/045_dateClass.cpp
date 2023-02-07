@@ -16,7 +16,7 @@ public:
 
     void ShowDate();
 
-    Date(int year, int month, int day) // 생성자 : 객체 생성시 자동으로 호출되는 함수.
+    Date(int year, int month, int day) // 3. 생성자 : 객체 생성시 자동으로 호출되는 함수.
     {
         year_ = year;
         month_ = month;
@@ -90,11 +90,11 @@ void Date::ShowDate()
 
 int main()
 {
-    // Date date; // 이 쓰레기 값을 막기 위해 생성자를 사용할 수 있다.
-    Date date(2011, 3, 1); // 생성자에 인자를 넣어주는 모습.
+    // Date date; // 2. 이 쓰레기 값을 막기 위해 생성자를 사용할 수 있다.
+    Date date(2011, 3, 1); // 4. 생성자에 인자를 넣어주는 모습.
     // Date date = Date(2011, 3, 1) 다음과 똑같은 방법이다.
 
-    date.SetDate(2023, 2, 3); //생성후 초기화는 필수다. 이를 안해주면 쓰레기값이 나온다.
+    date.SetDate(2023, 2, 3); //1. 생성후 초기화는 필수다. 이를 안해주면 쓰레기값이 나온다.
     date.AddYear(1);
     date.AddDay(28);
     date.AddMonth(-1);
@@ -102,3 +102,8 @@ int main()
     date.ShowDate();
     return 0;
 }
+
+/*
+이때의 쓰레기 값은 디폴트 생성자에 의해 생성되는 것이다.
+따라서 우리는 4번 과정에서 인자를 넣어주지 않고, 디폴트 생성자를 변경하여 기본 값을 만들어 줄 수 있다.
+*/
