@@ -49,6 +49,12 @@ public:
     MyString& insert(int loc, char c);
 
     MyString& erase(int loc, int num);
+
+    int find(int find_from, const MyString& str) const;
+    int find(int find_from, const char* str) const;
+    int find(int find_from, char c) const;
+
+    int compare(const MyString& str) const;
 };
 
 MyString::MyString(char c)
@@ -212,7 +218,7 @@ MyString& MyString::insert(int loc, char c)
 }
 MyString& MyString::erase(int loc, int num)
 {
-    if (num < 0 or loc < 0 or loc > string_length) return *this;
+    if (num < 0 or loc < 0  or loc + num > string_length) return *this;
     
     for (int i = loc + num; i < string_length; i++)
     {
@@ -221,12 +227,57 @@ MyString& MyString::erase(int loc, int num)
     string_length -= num;
     return *this;
 }
+int MyString::find(int find_from, const MyString& str) const
+{
+    int i, j;
+    if (str.string_length == 0) return -1;
+    for (i = find_from; i <= string_length - str.string_length; i++)
+    {
+        for (j = 0; j < str.string_length; j++)
+        {
+            if (string_content[i + j] != str.string_content[j])
+            {
+                break;
+            }
+        }
+        if (j == str.string_length)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+int MyString::find(int find_from, const char* str) const
+{
+    MyString temp(str);
+    return find(find_from, temp);
+}
+int MyString::find(int find_from, char c) const
+{
+    MyString temp(c);
+    return find(find_from, temp);
+}
+int MyString::compare(const MyString& str) const
+{ // -1은 기존 객체가 더 앞일때, 1은 비교대상이 더 앞일때.
+    for (int i = 0; i < min(string_length, str.string_length); i++)
+    {
+        if (string_content[i] < str.string_content[i]) return -1;
+        if (string_content[i] > str.string_content[i]) return 1;
+    }
+    if (string_length == str.string_length) return 0;
+    else if (string_length < str.string_length)
+    {
+        return -1;
+    }
 
+    return 1;
+}
 
 int main()
 {
     MyString str1("Very Very Very Long String");
     MyString str2(" <Inserted string> ");
+    MyString str3(str1);
     
     cout << "String length : " << str1.length() << endl;
     cout << "Capacity : " << str1.capacity() << endl;
@@ -261,4 +312,12 @@ int main()
     
     cout << "String length : " << str1.length() << endl;
     cout << "Capacity : " << str1.capacity() << endl;
+
+    cout << "Location of first <Very> in the str3 : " << str3.find(0, "Very") << endl;
+    cout << "Location of second <Very> in the str3 : " << str3.find(str3.find(0, "Very") + 1, "Very") << endl;
+
+    str1.println();
+    str2.println();
+
+    cout << "str1 and str2 compare : " << str1.compare(str2) << endl;
 }
