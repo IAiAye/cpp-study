@@ -20,7 +20,7 @@ int main()
         cin >> begin >> end  >> mid;
         copy(arr + begin - 1, arr + end, arr_temp); // 설정한 구간을 임시 저장.
 
-        for (int j = 0; j <= end  - mid; j++)
+        for (int j = 0; j <= end  - mid; j++) // mid ~ end 까지 앞으로 당기기.
         {
             arr[begin - 1 + j] = arr_temp[j + mid - begin];
         }
