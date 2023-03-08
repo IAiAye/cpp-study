@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee
+{
+private:
+    string name;
+    int age;
+
+    string position; // 직책 이름
+    int rank; // 서열 순위
+
+public:
+    Employee(string name, int age, string position, int rank) : name(name), age(age), position(position), rank(rank) {}
+
+    // 복사 생성자
+    Employee(const Employee& employee)
+    {
+        name = employee.name;
+        age = employee.age;
+        position = employee.position;
+        rank = employee.rank;
+    }    
+
+    // 디폴트 생성자
+    Employee() {}
+
+    void print_info()
+    {
+        cout << name << " (" << position << " , " << age << ") ==> " << caculate_pay() << "만원" << endl;
+    }
+    int caculate_pay() { return 200 + rank * 50; }
+};
+
+class EmployeeList
+{
+private:
+    int alloc_employee; // 할당해주는 인원 수.
+    int current_employee; // 실제 직원 수.
+    Employee **employee_list; // Employee* 클래스 객체를 담는 배열이므로 **로 구성.
+
+public:
+    EmployeeList(int alloc_employee) : alloc_employee(alloc_employee)
+    {
+        employee_list = new Employee*[alloc_employee];
+        current_employee = 0;
+    }
+    void add_employee(Employee* employee)
+    {     
+        employee_list[current_employee] = employee;
+        current_employee++;
+    }
+    int current_employee_num() { return current_employee; }
+
+    void print_employ_info()
+    {
+        int total_pay = 0;
+        for (int i = 0; i < current_employee; i++)
+        {
+            employee_list[i]->print_info();
+            total_pay += employee_list[i]->caculate_pay();
+        }
+        cout << "총 비용 : " << total_pay << "만원 " << endl;
+    }
+
+    ~EmployeeList()
+    {
+        for (int i = 0; i < current_employee; i++)
+        {
+            delete employee_list[i];
+        }
+        delete[] employee_list;
+    }
+};
+
+int main()
+{
+    EmployeeList emp_list(10);
+    emp_list.add_employee(new Employee("노홍철", 34, "평사원", 1));
+    emp_list.add_employee(new Employee("하하", 34, "평사원", 1));
+
+    emp_list.add_employee(new Employee("유재석", 41, "부장", 7));
+    emp_list.add_employee(new Employee("박명수", 43, "차장", 5));
+    emp_list.add_employee(new Employee("정준하", 42, "과장", 4));
+    emp_list.add_employee(new Employee("정형돈", 36, "대리", 2));
+    emp_list.add_employee(new Employee("길", 36, "인턴", -2));
+    emp_list.print_employ_info();
+    
+    return 0;
+}
