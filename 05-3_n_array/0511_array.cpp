@@ -35,10 +35,8 @@ public:
         current->next = new Address[size[current->level]]; // current 의 next 부분에 새로운 시작 주소값을 만들어준다.
         for (int i = 0; i < size[current->level]; i++)
         { // 다음 단계로 넘어가는 과정.
-            (static_cast<Address *>(current->next) + 1)->level = current->level + 1;
-
-            initialize_address(static_cast<Address *>(current->next) + 1);
+            (static_cast<Address *>(current->next) + i)->level = current->level + 1; // void로 선언해주었던 next를 Address로 변환시켜주고 level을 하나씩 증가시켜준다.
+            initialize_address(static_cast<Address *>(current->next) + i);
         }
     }
 };
-
