@@ -1,0 +1,10 @@
+Manager 가 Employee를 상속한다 했을때,
+
+Manager 클래스는 Employee 의 모든 기능을  포함한다.
+Manager 클래스는 Employee 의 기능을 모두 수행할 수 있기때문에 Manager 를 Employee 라 칭해도 무방하다.
+따라서 모든 Manager는 Employee 이다.
+
+Manager is a Employee !!
+
+이의 역은 성립하지 않는다!
+이때 상속 관계를 도표로 나타낼때, 파생 클래스( Manager ) 가 기반 클래스 ( Employee )를 화살표로 가르키게 된다.
