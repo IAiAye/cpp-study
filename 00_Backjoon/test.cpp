@@ -1,32 +1,32 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 using namespace std;
 
+long long a, b, c;
+int cnt;
+
+long long pow(long long x, long long n) {
+    if (n == 0) cnt++; return 1;
+    if (n == 1) cnt++; return x % c;
+
+    long long half = pow(x, n / 2);
+    long long result = (half * half) % c;
+
+    if (n % 2 == 1) {
+        result = (result * x) % c;
+    }
+
+    return result;
+}
+
 int main() {
-    int n;
-    cin >> n;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-    vector<int> arr(n);
-    vector<int> cum_sum(n);
+    cin >> a >> b >> c;
 
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-        if (i == 0) {
-            cum_sum[i] = arr[i];
-        } else {
-            cum_sum[i] = cum_sum[i-1] + arr[i];
-        }
-    }
-
-    int max_sum = arr[0];
-    int min_cum_sum = 0;
-    for (int i = 0; i < n; i++) {
-        max_sum = max(max_sum, cum_sum[i] - min_cum_sum);
-        min_cum_sum = min(min_cum_sum, cum_sum[i]);
-    }
-
-    cout << max_sum << endl;
+    cout << pow(a, b) << '\n';
+    cout << cnt << '\n';
 
     return 0;
 }
