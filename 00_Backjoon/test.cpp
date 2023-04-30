@@ -1,32 +1,48 @@
 #include <iostream>
-using namespace std;
 
-long long a, b, c;
-int cnt;
+int left = 0;
+int right = 500;
+int target = 237;
+int cnt = 0;
 
-long long pow(long long x, long long n) {
-    if (n == 0) cnt++; return 1;
-    if (n == 1) cnt++; return x % c;
+bool isBelow(int x)
+{
+    bool result = false;
 
-    long long half = pow(x, n / 2);
-    long long result = (half * half) % c;
-
-    if (n % 2 == 1) {
-        result = (result * x) % c;
+    if (target < x)
+    {
+        result = true;
     }
-
     return result;
 }
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
+int binarySearch(int left, int right)
+{
+    std:: cout << left << ' ' << right << '\n';
+    if (left == right) return left;
+    
+    cnt++;
+    int mid = (left + right) / 2;
+    
+    // left ~ mid에 타겟이 존재할때
+    if (isBelow(mid + 1))
+    {
+        return binarySearch(left, mid);
+    }
+    else
+    {
+        return binarySearch(mid + 1, right);
+    }
+}
 
-    cin >> a >> b >> c;
+int main()
+{
+    while (left < right)
+    {
+        int mid = (left + right) / 2;
+        if (isBelow(mid + 1)) right = mid;
+        else left = mid + 1;
+    }
 
-    cout << pow(a, b) << '\n';
-    cout << cnt << '\n';
-
-    return 0;
+    std::cout << cnt;
 }
