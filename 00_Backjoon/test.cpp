@@ -1,48 +1,34 @@
 #include <iostream>
+#include <vector>
 
-int left = 0;
-int right = 500;
-int target = 237;
-int cnt = 0;
-
-bool isBelow(int x)
-{
-    bool result = false;
-
-    if (target < x)
-    {
-        result = true;
-    }
-    return result;
-}
-
-int binarySearch(int left, int right)
-{
-    std:: cout << left << ' ' << right << '\n';
-    if (left == right) return left;
-    
-    cnt++;
-    int mid = (left + right) / 2;
-    
-    // left ~ mid에 타겟이 존재할때
-    if (isBelow(mid + 1))
-    {
-        return binarySearch(left, mid);
-    }
-    else
-    {
-        return binarySearch(mid + 1, right);
-    }
-}
+using namespace std;
 
 int main()
 {
-    while (left < right)
-    {
-        int mid = (left + right) / 2;
-        if (isBelow(mid + 1)) right = mid;
-        else left = mid + 1;
-    }
-
-    std::cout << cnt;
+    vector<int> vec = {1, 2, 3};
+    
+    // index 1에 4 추가
+    vec[1] = 4;
+    // vec: {1, 4, 3}
+    
+    // index 1에 5 추가
+    vec.push_back(5);
+    // vec: {1, 4, 3, 5}
+    
+    // index 1에 6 추가
+    vec.push_back(6);
+    // vec: {1, 4, 3, 5, 6}
+    
+    // index 1에 7 추가
+    vec.push_back(7);
+    // vec: {1, 4, 3, 5, 6, 7}
+    
+    // index 1에 8 추가
+    vec.push_back(8);
+    // vec: {1, 4, 3, 5, 6, 7, 8}
+    
+    cout << vec[1] << endl;
+    // 출력: 8
+    
+    return 0;
 }
