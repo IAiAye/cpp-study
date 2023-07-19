@@ -1,37 +1,64 @@
 #include <iostream>
 #include <string>
+#include <cmath>
+#include <iomanip>
 using namespace std;
+
+int t, num;
+
+double roundHalfUp(double num, int decimalPlaces) 
+{
+    double multiplier = pow(10.0, decimalPlaces);
+    return (num >= 0.0) ? floor(num * multiplier + 0.5) / multiplier : ceil(num * multiplier - 0.5) / multiplier;
+}
+
+void Input()
+{
+    cin >> t;
+}
+
+void Solution()
+{    
+    while (t--)
+    {
+        cin >> num;
+        int* score = new int[num];
+        double avg = 0;
+        for (int i = 0; i < num; i++)
+        {
+            cin >> score[i];
+            avg += score[i];
+        }
+        avg = avg / num;
+
+        double cnt = 0;
+        for (int i = 0; i < num; i++)
+        {
+            if (score[i] > avg) cnt++;
+        }
+        cnt = cnt / num * 100;
+        cnt = roundHalfUp(cnt, 3);
+        cout << fixed << std::setprecision(3);
+        cout << cnt << "% \n";
+
+        delete[] score;
+    }
+    
+}
+
+void Solve()
+{
+    Input();
+    Solution();
+}
+
 int main()
 {
-    int test_case;
-    double num_student;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
 
-    cin >> test_case;
-
-    for (int i = 0; i < test_case; i++)
-    {
-        int score[1000] = {0};
-        int sum = 0;
-        int avg = 0;
-        double over_avg = 0;
-        cin >> num_student;
-        for (int j = 0; j < num_student; j++)
-        {
-            cin >> score[j];
-            sum += score[j];
-        }
-        avg = sum / num_student;
-        for (int j = 0; j < num_student; j++)
-        {
-            if (score[j] > avg)
-            {
-                over_avg += 1;
-            }
-        }
-        cout << fixed;
-        cout.precision(3);
-        cout << over_avg / num_student * 100 << "% \n";
-    }
+    Solve();
     
     return 0;
 }
