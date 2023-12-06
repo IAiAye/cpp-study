@@ -5,7 +5,7 @@
 #include <queue>
 using namespace std;
 
-vector<int> graph[101];
+vector<vector<int>> graph(101);
 int n, m;
 
 int bfs(int start)
@@ -20,10 +20,10 @@ int bfs(int start)
     while (!q.empty())
     {
         int cur = q.front().first;
-        int num = q.front().second;
+        int cnt = q.front().second;
 
+        sum += cnt;
         q.pop();
-        sum += num;
 
         for (int i = 0; i < graph[cur].size(); i++)
         {
@@ -31,7 +31,7 @@ int bfs(int start)
             if (!visited[next])
             {
                 visited[next] = true;
-                q.push({next, num + 1});
+                q.push({next, cnt + 1});
             }
         }
     }
@@ -53,17 +53,18 @@ void Input()
 
 void Solution()
 {
-    int minNum = 1000;
+    int minNum = 1000000;
     int minIdx = -1;
     for (int i = 1; i <= n; i++)
     {
-        int BFS = bfs(i);
-        if (BFS < minNum)
+        int kbNum = bfs(i);
+        if (kbNum < minNum)
         {
-            minNum = BFS;
+            minNum = kbNum;
             minIdx = i;
         }
     }
+    cout << minNum << '\n';
     cout << minIdx << '\n';
 }
 
